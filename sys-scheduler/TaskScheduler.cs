@@ -53,7 +53,7 @@ public class TaskScheduler
 
     private void InsertDummyData(int count = 20)
     {
-        var dummyTasks = GenerateDummyTasks(count);
+        var dummyTasks = GenerateDummyTasks(count).ToList();
         _tasks.InsertMany(dummyTasks);
     }
 
@@ -119,6 +119,41 @@ public class TaskScheduler
     {
         return _tasks.AsQueryable().Count(t => t.FinishDate == null);
     }
+    
+    public int GetFinishedTasksCountBetweenDates(DateTime startDate, DateTime endDate)
+    {
+        return _tasks.AsQueryable()
+            .Count(t => t.FinishDate >= startDate && 
+                        t.FinishDate <= endDate);
+    }
+
+    public int GetOverdueTasksCount(DateTime currentDate)
+    {
+        return _tasks.AsQueryable()
+            .Count(t => t.DueDate < currentDate && 
+                        t.FinishDate == null);
+    }
+
+    public IEnumerable<Task> GetLastThreeTasksCreatedBeforeDays(DateTime currentDate, int days)
+    {
+        var cutoffDate = currentDate.AddDays(-days);
+    
+        return _tasks.AsQueryable()
+            .Where(t => t.CreationDate <= cutoffDate)
+            .OrderByDescending(t => t.CreationDate)
+            .Take(3)
+            .ToList();
+    }
+
+    public IEnumerable<Task> GetLastThreeTasksCompletedSameDay()
+    {
+        return _tasks.AsQueryable()
+            .Where(t => t.FinishDate != null && 
+                        t.CreationDate.Date == t.FinishDate.Value.Date)
+            .OrderByDescending(t => t.CreationDate)
+            .Take(3)
+            .ToList();
+    }
 
     public IEnumerable<PriorityTaskCount> GetUnfinishedTaskCountByPriority()
     {
@@ -131,5 +166,33 @@ public class TaskScheduler
             })
             .OrderBy(g => (int)g.Priority) // Use Queryable.OrderBy
             .ToList();
+    }
+    
+
+    public Task? GetHighestPriorityTask()
+    {
+        if (!_useHeap)
+        {
+            ToggleHeapUsage(); // Ensure heap is being used
+        }
+    
+        // Since your heap is already ordered by priority and due date (via TaskComparer),
+        // the root element will be the highest priority task
+        return _taskHeap.PeekRoot();
+    }
+
+    public Task? GetLowestPriorityTask()
+    {
+        if (!_useHeap)
+        {
+            ToggleHeapUsage(); // Ensure heap is being used
+        }
+    
+        // Get all tasks from heap and find the one with lowest priority
+        var heapTasks = ((TaskHeap)_taskHeap).TheHeap;
+        return heapTasks
+            .OrderByDescending(t => (int)t.Priority)  // Higher number means lower priority
+            .ThenByDescending(t => t.DueDate)         // Later due date for equal priorities
+            .FirstOrDefault();
     }
 }
