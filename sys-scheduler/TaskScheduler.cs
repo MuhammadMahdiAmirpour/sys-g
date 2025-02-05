@@ -19,7 +19,7 @@ public class TaskScheduler
         InsertDummyData();
 
         // Initialize the heap with a MinHeap using the TaskComparer
-        _taskHeap = HeapFactory.CreateHeap(true, new TaskComparer());
+        _taskHeap = new TaskHeap(new TaskComparer());
         LoadTasksIntoHeap();
     }
 
