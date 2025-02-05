@@ -139,8 +139,8 @@ public class TaskScheduler
         var cutoffDate = currentDate.AddDays(-days);
     
         return _tasks.AsQueryable()
-            .Where(t => t.CreationDate <= cutoffDate)
-            .OrderByDescending(t => t.CreationDate)
+            .Where(t => t.CreationDate >= cutoffDate) // Changed <= to >= to get newer tasks
+            .OrderByDescending(t => t.CreationDate)   // Keep descending to get newest first
             .Take(3)
             .ToList();
     }
@@ -150,7 +150,7 @@ public class TaskScheduler
         return _tasks.AsQueryable()
             .Where(t => t.FinishDate != null && 
                         t.CreationDate.Date == t.FinishDate.Value.Date)
-            .OrderByDescending(t => t.CreationDate)
+            .OrderByDescending(t => t.CreationDate)   // This was correct - keeps newest first
             .Take(3)
             .ToList();
     }
