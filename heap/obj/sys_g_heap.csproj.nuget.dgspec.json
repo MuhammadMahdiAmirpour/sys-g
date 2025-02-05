@@ -1,0 +1,61 @@
+{
+  "format": 1,
+  "restore": {
+    "/home/sysiphux/workspace/tutorials/csharp/sys-g-heap/sys_g_heap/sys_g_heap.csproj": {}
+  },
+  "projects": {
+    "/home/sysiphux/workspace/tutorials/csharp/sys-g-heap/sys_g_heap/sys_g_heap.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/home/sysiphux/workspace/tutorials/csharp/sys-g-heap/sys_g_heap/sys_g_heap.csproj",
+        "projectName": "sys_g_heap",
+        "projectPath": "/home/sysiphux/workspace/tutorials/csharp/sys-g-heap/sys_g_heap/sys_g_heap.csproj",
+        "packagesPath": "/home/sysiphux/.nuget/packages/",
+        "outputPath": "/home/sysiphux/workspace/tutorials/csharp/sys-g-heap/sys_g_heap/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/home/sysiphux/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/8.0.112/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}
